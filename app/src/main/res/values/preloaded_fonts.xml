@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/aclonica</item>
+        <item>@font/actor</item>
+        <item>@font/adamina</item>
+        <item>@font/alegreya_sans_sc</item>
+        <item>@font/allerta</item>
+        <item>@font/amaranth_bold</item>
+        <item>@font/averia_libre</item>
+        <item>@font/fjord_one</item>
+        <item>@font/lustria</item>
+        <item>@font/merienda_one</item>
+    </array>
+</resources>
