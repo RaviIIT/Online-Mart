@@ -6,5 +6,5 @@ Everything in this application including images of the product, address of users
 This makes the app extremely light weight.
 
 Following are the Youtube links demonstrating the working after I successfully made this application - 
-Video 1 - https://studio.youtube.com/video/JZ1txvmHCiI/edit
-Video 2 - https://studio.youtube.com/video/hotQJ_68nSM/edit
+Video 1 - https://youtu.be/JZ1txvmHCiI
+Video 2 - https://youtu.be/hotQJ_68nSM
