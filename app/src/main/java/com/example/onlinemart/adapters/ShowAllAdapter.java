@@ -21,9 +21,11 @@ import java.util.List;
 
 public class ShowAllAdapter extends RecyclerView.Adapter<ShowAllAdapter.ViewHolder> {
 
+    //declaring basic things for adapters
     private Context context;
     private List<ShowAllModel> list;
 
+    //constructor
     public ShowAllAdapter(Context context, List<ShowAllModel> list) {
         this.context = context;
         this.list = list;
@@ -57,11 +59,13 @@ public class ShowAllAdapter extends RecyclerView.Adapter<ShowAllAdapter.ViewHold
         return list.size();
     }
 
+    //customised viewHolder
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView mItemImage;
         private TextView mCost;
         private TextView mName;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

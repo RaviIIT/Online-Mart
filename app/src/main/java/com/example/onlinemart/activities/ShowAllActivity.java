@@ -28,6 +28,7 @@ public class ShowAllActivity extends AppCompatActivity {
     ShowAllAdapter showAllAdapter;
     List<ShowAllModel> showAllModelList;
 
+    // for data accessing from database
     FirebaseFirestore firestore;
 
     @Override
@@ -46,17 +47,19 @@ public class ShowAllActivity extends AppCompatActivity {
             }
         });
 
+        //getting data from intent that was passed from previous activity
         String type = getIntent().getStringExtra("type");
 
         firestore = FirebaseFirestore.getInstance();
         recyclerView = findViewById(R.id.show_all_rec);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
+        // for inflating data into the recyler views
         showAllModelList = new ArrayList<>();
         showAllAdapter = new ShowAllAdapter(this, showAllModelList);
         recyclerView.setAdapter(showAllAdapter);
 
-
+        //inflating all items if type is null
         if(type == null || type.isEmpty())
         {
 
@@ -78,6 +81,7 @@ public class ShowAllActivity extends AppCompatActivity {
                     });
         }
 
+        //inflating particular items according to their type (from database)
         if(type != null && type.equalsIgnoreCase("men")){
 
             firestore.collection("ShowAll").whereEqualTo("type", "men")

@@ -21,15 +21,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //hide toolbar
-        //getSupportActionBar().hide();
-
+        // declaring a fragment object to inflate fragment into an activity
         homeFragment = new HomeFragment();
         loadFragment(homeFragment);
 
         Button viewCart;
         viewCart = findViewById(R.id.view_cart_button);
 
+        //starts cartActivity when view cart button clicked
         viewCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
+    //function to inflate fragment
     private void loadFragment(Fragment homeFragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.home_container, homeFragment);

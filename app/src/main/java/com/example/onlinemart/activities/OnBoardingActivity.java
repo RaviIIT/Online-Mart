@@ -19,6 +19,7 @@ import com.example.onlinemart.adapters.SliderAdapter;
 
 public class OnBoardingActivity extends AppCompatActivity {
 
+    //scrollable views
     ViewPager viewPager;
     LinearLayout dotsLayout;
     SliderAdapter sliderAdapter;
@@ -30,10 +31,7 @@ public class OnBoardingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //hide status bar
-
         setContentView(R.layout.activity_on_boarding);
-
 
         viewPager = findViewById(R.id.slider);
         dotsLayout = findViewById(R.id.dots);

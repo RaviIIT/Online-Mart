@@ -38,7 +38,6 @@ public class DetailedActivity extends AppCompatActivity {
     ImageView addItems, removeItems;
     int totalQuantity = 1, totalPrice = 0;
 
-
     //New Products
     NewProductsModel newProductsModel = null;
 
@@ -57,8 +56,6 @@ public class DetailedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed);
 
-        //getSupportActionBar().hide();
-
         toolbar = findViewById(R.id.detailed_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -74,19 +71,19 @@ public class DetailedActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
 
+        // getting data from intent passed from previous activity
         final Object obj = getIntent().getSerializableExtra("detailed");
 
+        // checking if the upper data is from this model
         if(obj instanceof NewProductsModel){
             newProductsModel = (NewProductsModel) obj;
-        }
+        }        // checking if the upper data is from this model
         else if (obj instanceof  PopularProductsModel){
             popularProductsModel = (PopularProductsModel) obj;
-        }
+        }        // checking if the upper data is from this model
         else if (obj instanceof  ShowAllModel){
             showAllModel = (ShowAllModel) obj;
         }
-
-
 
         detailedImg = findViewById(R.id.detailed_img);
         quantity = findViewById(R.id.quantity);
@@ -99,6 +96,7 @@ public class DetailedActivity extends AppCompatActivity {
         addItems = findViewById(R.id.add_item);
         removeItems = findViewById(R.id.remove_item);
 
+        //filling data accordingly what item was clicked
         //New Products
         if(newProductsModel != null){
             Glide.with(getApplicationContext()).load(newProductsModel.getImg_url()).into(detailedImg);
@@ -171,6 +169,7 @@ public class DetailedActivity extends AppCompatActivity {
             public void onClick(View view) {
             Intent intent = new Intent(DetailedActivity.this, AddressActivity.class);
 
+            //passing an extra data with intent
             if(newProductsModel != null){
                 intent.putExtra("item", newProductsModel);
             }
@@ -182,8 +181,6 @@ public class DetailedActivity extends AppCompatActivity {
             }
 
             startActivity(intent);
-
-
             }
         });
 
@@ -198,7 +195,7 @@ public class DetailedActivity extends AppCompatActivity {
     }
 
     private void addtoCart() {
-
+        //entering time and date along with the prices into our database
         String saveCurrentTime, saveCurrentDate;
 
         Calendar calForDate = Calendar.getInstance();

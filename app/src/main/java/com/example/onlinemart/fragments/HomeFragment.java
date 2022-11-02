@@ -46,20 +46,19 @@ public class HomeFragment extends Fragment {
     ProgressDialog progressDialog;
     RecyclerView catRecyclerview, newProductRecyclerview, popularRecyclerview;
 
-    //Category recycler view
+    //adapters and list for Category
     CategoryAdapter categoryAdapter;
     List<CategoryModel> categoryModelList;
 
-    //New Product Recycler view
+    //adapters and list for New Products
     NewProductsAdapter newProductsAdapter;
     List<NewProductsModel> newProductsModelList;
 
-    //Popular Recycler view
+    //adapters and list for Popular products
     PopularProductsAdapter popularProductsAdapter;
     List<PopularProductsModel> popularProductsModelList;
 
-
-    //Firestore
+    //Firestore object for Firebase database
     FirebaseFirestore db;
 
     public HomeFragment() {
@@ -69,9 +68,10 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // Initialised the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
+        //initialised progress dialog object
         progressDialog = new ProgressDialog(getActivity());
 
         //recycler view for category
@@ -83,47 +83,57 @@ public class HomeFragment extends Fragment {
         //recycler view for All products
         popularRecyclerview = root.findViewById(R.id.popular_rec);
 
+        //see all view on each of the 3
         catShowAll = root.findViewById(R.id.category_see_all);
         popularShowAll = root.findViewById(R.id.popular_see_all);
         newProductShowAll = root.findViewById(R.id.newProducts_see_all);
 
-
+        //inflates showAllActivity
         catShowAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //new intent opening from recyclerview onclick
                 Intent intent = new Intent(getContext(), ShowAllActivity.class);
                 startActivity(intent);
             }
         });
 
+        //inflates showAllActivity
         newProductShowAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //new intent opening from recyclerview onclick
                 Intent intent = new Intent(getContext(), ShowAllActivity.class);
                 startActivity(intent);
             }
         });
 
+        //inflates showAllActivity
         popularShowAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //new intent opening from recyclerview onclick
                 Intent intent = new Intent(getContext(), ShowAllActivity.class);
                 startActivity(intent);
             }
         });
 
+        // initialised Firestore database object
         db = FirebaseFirestore.getInstance();
 
         linearLayout = root.findViewById(R.id.home_layout);
         linearLayout.setVisibility(View.GONE);
-        //image slider
+
+        //image slider for topmost image sliding design
         ImageSlider imageSlider = root.findViewById(R.id.image_slider);
         List<SlideModel> slideModels = new ArrayList<>();
 
+        //inserting objects into slideModels
         slideModels.add(new SlideModel(R.drawable.banner1, "Discount on Shoes Items", ScaleTypes.CENTER_CROP));
         slideModels.add(new SlideModel(R.drawable.banner2, "Discount on Perfume", ScaleTypes.CENTER_CROP));
         slideModels.add(new SlideModel(R.drawable.banner3, "70% OFF", ScaleTypes.CENTER_CROP));
 
+        //setting images in imageSlider
         imageSlider.setImageList(slideModels);
 
         progressDialog.setTitle("Welocme to Online Mart");
@@ -138,7 +148,7 @@ public class HomeFragment extends Fragment {
         catRecyclerview.setAdapter(categoryAdapter);
 
 
-        //copied from tools->firebase->read data
+        //getting data from Firestore
         db.collection("Category")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -148,8 +158,11 @@ public class HomeFragment extends Fragment {
                         {
                             for (QueryDocumentSnapshot document : task.getResult())
                             {
+                                //creating an object of this class Model
                                 CategoryModel categoryModel = document.toObject(CategoryModel.class);
+                                //adding elements
                                 categoryModelList.add(categoryModel);
+                                //notifying adapter about the changes
                                 categoryAdapter.notifyDataSetChanged();
                                 linearLayout.setVisibility(View.VISIBLE);
                                 progressDialog.dismiss();
@@ -177,6 +190,7 @@ public class HomeFragment extends Fragment {
                         {
                             for (QueryDocumentSnapshot document : task.getResult())
                             {
+                                //creating an object of this class Model
                                 NewProductsModel newProductsModel = document.toObject(NewProductsModel.class);
                                 newProductsModelList.add(newProductsModel);
                                 newProductsAdapter.notifyDataSetChanged();
@@ -208,11 +222,7 @@ public class HomeFragment extends Fragment {
                                 popularProductsModelList.add(popularProductsModel);
                                 popularProductsAdapter.notifyDataSetChanged();
                             }
-
-
                         }
-
-
                     }
                 });
 

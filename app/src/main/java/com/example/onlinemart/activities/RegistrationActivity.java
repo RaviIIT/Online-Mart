@@ -20,29 +20,37 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class RegistrationActivity extends AppCompatActivity {
 
+    //for input of name etc.
     EditText name, email, password;
+
+    //for authorisation
     private FirebaseAuth auth;
 
+    //for storing some small infos in local storage
     SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-
-
+        // for authorisation
         auth = FirebaseAuth.getInstance();
 
+        //if currently I have an active user on this device for my application
         if(auth.getCurrentUser() != null)
         {
-            Toast.makeText(RegistrationActivity.this,"Wrong work", Toast.LENGTH_SHORT).show();
-
+            //displays a text message that this is not a new user
+            Toast.makeText(RegistrationActivity.this,"Active user", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
             finish();
         }
+
+        //for a new user
         name = findViewById(R.id.name);
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
 
+        //only first time this happens, so true for first time and after that it becomes false
         sharedPreferences = getSharedPreferences("onBoardingScreen", MODE_PRIVATE);
 
         boolean isFirstTime = sharedPreferences.getBoolean("firstTime", true);
@@ -58,12 +66,15 @@ public class RegistrationActivity extends AppCompatActivity {
 
     }
 
+    //calling this function by onClick attribute on a button
     public void signup(View view)
     {
+        //getting texts and storing into strings
         String userName = name.getText().toString();
         String userEmail = email.getText().toString().trim();
         String userPassword = password.getText().toString();
 
+        //showing errors for particular cases
         if(TextUtils.isEmpty(userName))
         {
             Toast.makeText(this, "Enter Name!", Toast.LENGTH_SHORT).show();
@@ -88,11 +99,13 @@ public class RegistrationActivity extends AppCompatActivity {
             return;
         }
 
+        //predefined API by Firebase to create a user with mail and password
         auth.createUserWithEmailAndPassword(userEmail, userPassword).addOnCompleteListener(RegistrationActivity.this, new OnCompleteListener<AuthResult>()
         {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task)
             {
+                //going to different activites based on the execution
                 if (task.isSuccessful())
                 {
                     Toast.makeText(RegistrationActivity.this, "Successfully Register ", Toast.LENGTH_SHORT).show();
@@ -109,7 +122,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     public void signin(View view)
     {
-        Toast.makeText(RegistrationActivity.this,"Wrong work", Toast.LENGTH_SHORT).show();
+        Toast.makeText(RegistrationActivity.this,"Sign In", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
     }
 }
