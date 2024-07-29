@@ -26,17 +26,20 @@ public class RegistrationActivity extends AppCompatActivity {
     //for authorisation
     private FirebaseAuth auth;
 
-    //for storing some small infos in local storage
+    //for storing some small infos in local storage using key value pairs
     SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //sets the layout using activity_registration xml file
         setContentView(R.layout.activity_registration);
+        
         // for authorisation
         auth = FirebaseAuth.getInstance();
 
-        //if currently I have an active user on this device for my application
+        // checks for an active user on this device primarily with tokens and sessions
         if(auth.getCurrentUser() != null)
         {
             //displays a text message that this is not a new user
@@ -50,11 +53,11 @@ public class RegistrationActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
 
-        //only first time this happens, so true for first time and after that it becomes false
         sharedPreferences = getSharedPreferences("onBoardingScreen", MODE_PRIVATE);
-
+        //when app installed for 1st time, firstTime key isn't present as sharedPreference is empty 
         boolean isFirstTime = sharedPreferences.getBoolean("firstTime", true);
 
+        //only opens if app in installed first time
         if(isFirstTime){
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean("firstTime", false);
